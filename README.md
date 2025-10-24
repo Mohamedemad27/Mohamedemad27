@@ -58,12 +58,19 @@ I love exploring new technologies, improving code quality, and solving real prob
 
 ---
 
-### 📫 Contact Me
+### Connect with me:
+<p align="left">
+    <a href="https:https://www.facebook.com/mohamed.emad.972846/" target="_blank">
+        <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="Mohamed Emad" height="30" width="40" />
+    </a>
+    <a href="https://www.instagram.com/mohamedemad6648/?hl=en" target="_blank">
+        <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Mohamed Emad" height="30" width="40" />
+    </a>
+    <a href="https://www.linkedin.com/in/mohamed-emad-eldin-fathey/" target="_blank">
+        <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="Mohamed Emad" height="30" width="40" />
+    </a>
+</p>
 
-- Email: **momda332@gmail.com**  
-- LinkedIn: *https://www.linkedin.com/in/mohamedemad/*  
-
----
 
 ### ⚡ GitHub Stats
 
@@ -73,6 +80,33 @@ I love exploring new technologies, improving code quality, and solving real prob
 </div>
 
 ---
+</p>
+
+### Languages and Tools:
+<p align="left"> 
+    <center>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/dotnet.png" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/csharp.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/elasticsearch.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/masstransit.png" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/rabbitmq.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/blazor.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/keycloak.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/openid.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/docker.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/mysql.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/react.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/javascript.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/html.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/css.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/bootstrap.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/python.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/django.svg" width="40" height="40"/> </span>
+    <span  target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/sherifabdallah/sherif-abdallah/main/icons/git.svg" width="40" height="40"/> </span>
+    </center>
+
+    
+</p>
 
 Thanks for stopping by 😄  
 Always learning. Always improving.

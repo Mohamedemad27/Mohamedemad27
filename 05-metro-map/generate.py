@@ -159,8 +159,8 @@ def build(p):
     b = [f'<rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="14" fill="{p["bg"]}" stroke="{p["edge"]}"/>']
 
     # title
-    b.append(t(28, 46, "Mohamed Emad", 24, p["ink"], weight="700"))
-    b.append(t(28, 70, "Backend network map · Banking & Fintech", 13, p["muted"]))
+    b.append(t(28, 46, "Backend network map", 24, p["ink"], weight="700"))
+    b.append(t(28, 70, "Projects, technologies and completed topics", 13, p["muted"]))
 
     # lines (drawn in, then a train rides each)
     for i, (key, (_, pts)) in enumerate(LINES.items()):

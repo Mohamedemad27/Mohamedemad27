@@ -106,8 +106,8 @@ def build():
     b.append(f'<path transform="translate({px} {py}) scale(1.25)" fill="{YELLOW}" d="M2 14 L10 13 L16 3 L19 3 L16 13 L23 12.5 '
              f'L25.5 9.5 L27.5 9.5 L26.5 14 L27.5 18.5 L25.5 18.5 L23 15.5 L16 15 L19 25 L16 25 L10 15 L2 14 Z"/>')
     b.append(f'<text x="{PAD+46}" y="70" font-family="{SANS}" font-size="30" font-weight="800" fill="{YELLOW}" letter-spacing="3">DEPARTURES</text>')
-    b.append(f'<text x="{W-PAD}" y="54" font-family="{SANS}" font-size="18" font-weight="700" fill="{WHITE}" text-anchor="end">MOHAMED EMAD</text>')
-    b.append(f'<text x="{W-PAD}" y="74" font-family="{MONO}" font-size="11.5" fill="{DIM}" text-anchor="end" letter-spacing="1">BACKEND DEVELOPER · CAREER SINCE 2022</text>')
+    b.append(f'<text x="{W-PAD}" y="54" font-family="{SANS}" font-size="18" font-weight="700" fill="{WHITE}" text-anchor="end">CAREER</text>')
+    b.append(f'<text x="{W-PAD}" y="74" font-family="{MONO}" font-size="11.5" fill="{DIM}" text-anchor="end" letter-spacing="1">BACKEND DEVELOPER · SINCE 2022</text>')
     b.append(f'<line x1="{PAD}" y1="{HEAD_H}" x2="{W-PAD}" y2="{HEAD_H}" stroke="#2C3036"/>')
 
     for (name, width, _), st in zip(COLS, STARTS):

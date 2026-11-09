@@ -98,8 +98,8 @@ def build(p):
     gx, gw = 270, 340
     b.append(box(p, gx, 14, gw, 124, p["accent"], 2))
     b.append(t(gx + gw / 2, 42, "API GATEWAY", "mono", 10, p["accent"], "middle", "700", 'letter-spacing="2"'))
-    b.append(t(gx + gw / 2, 76, "Mohamed Emad", "sans", 26, p["text"], "middle", "700"))
-    b.append(t(gx + gw / 2, 102, "Backend Developer · Banking & Fintech", "sans", 13, p["muted"], "middle"))
+    b.append(t(gx + gw / 2, 76, "Backend Developer", "sans", 26, p["text"], "middle", "700"))
+    b.append(t(gx + gw / 2, 102, "Banking & Fintech", "sans", 13, p["muted"], "middle"))
     b.append(t(gx + gw / 2, 124, "ASP.NET Core · C#", "mono", 11.5, p["text"], "middle"))
 
     b.append(box(p, 660, 30, 200, 92))

@@ -4,6 +4,12 @@
   <img src="00-header/assets/header-light.svg" width="100%" alt="Mohamed Emad. Backend developer, banking and fintech: core banking APIs, integrations and credit scoring, built with C# and ASP.NET Core. On GitHub since February 2023. A metro line runs through Rust, C#, ASP.NET Core, EF Core, SQL Server and Microservices."/>
 </picture>
 
+<p align="center">
+  <img src="08-departures-board/assets/departures.svg" width="100%" alt="Mohamed Emad's career as a split-flap airport departures board, oldest first. October 2022: Freelance, Software Engineer, freelance, departed. August 2023: ITI, Summer Internship, internship, departed. August 2024: CIB Egypt, Internship Trainee, internship, departed. October 2024: Route, Back End Developer, internship, departed. June 2025: Arab African International Bank, Internship Trainee, internship, departed. July 2025: CodeAlpha, Internship Trainee, internship, departed. July 2025: Hudl Statsbomb, Data Collector, internship, departed. August 2025: Orange Egypt, Technical Intern, internship, departed. September 2025: Upwork, Back End Developer, freelance, departed. September 2025: ITI, Internship Trainee, internship, departed. January 2026: Scale AI, Software Engineer, part-time, departed. January 2026: Trusted-IT (TIT), Back End Developer, full-time, in flight now. A ticker reads: now Back End Developer at Trusted-IT (TIT), then the stack."/>
+</p>
+
+<p align="center"><sub>Gates: <b>FT</b> full-time · <b>PT</b> part-time · <b>FL</b> freelance · <b>IN</b> internship</sub></p>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="04-architecture/assets/architecture-dark.svg"/>
   <source media="(prefers-color-scheme: light)" srcset="04-architecture/assets/architecture-light.svg"/>

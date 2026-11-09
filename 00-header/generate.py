@@ -13,10 +13,12 @@ W, H = 880, 290
 PAL = {
     "dark": dict(bg="#161B22", edge="#30363D", ink="#E6EDF3", muted="#8B949E", accent="#8B6CFF",
                  ok="#3FB950", station="#161B22", dot="#30363D",
-                 banking="#8B6CFF", work="#2BB3A3", uni="#F0883E", oss="#F85149", planned="#6E7681"),
+                 banking="#8B6CFF", work="#2BB3A3", uni="#F0883E", oss="#F85149", planned="#6E7681",
+                 arch="#58A6FF"),
     "light": dict(bg="#FFFFFF", edge="#D0D7DE", ink="#1F2328", muted="#59636E", accent="#512BD4",
                   ok="#1A7F37", station="#FFFFFF", dot="#D0D7DE",
-                  banking="#512BD4", work="#0E8A7E", uni="#E36209", oss="#CF222E", planned="#8C959F"),
+                  banking="#512BD4", work="#0E8A7E", uni="#E36209", oss="#CF222E", planned="#8C959F",
+                  arch="#0969DA"),
 }
 MONO = "ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Consolas, 'Liberation Mono', Menlo, monospace"
 SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
@@ -29,10 +31,10 @@ STATIONS = [
     ("ASP.NET Core", 384, "hub"),
     ("EF Core", 554, "hub"),
     ("SQL Server", 704, "hub"),
-    ("Microservices", 816, "planned"),
+    ("Microservices", 816, "stop"),
 ]
-# segment colours between consecutive solid stations
-SEGMENTS = ["oss", "banking", "work", "uni"]
+# segment colours between consecutive stations (arch = the metro map's Architecture line)
+SEGMENTS = ["oss", "banking", "work", "uni", "arch"]
 
 
 def t(x, y, s, cls="sans", size=13, fill="#000", anchor="start", weight=None, extra=""):
@@ -52,7 +54,7 @@ def build(p):
   @keyframes rise {{ from {{ transform: translateY(8px); }} to {{ transform: none; }} }}
   .pulse {{ animation: pulse 2s ease-in-out infinite; }}
   @keyframes pulse {{ 50% {{ opacity: .35; }} }}
-  .train {{ offset-path: path('M{STATIONS[0][1]} {LINE_Y} H{STATIONS[-2][1]}'); animation: ride 7s linear infinite; }}
+  .train {{ offset-path: path('M{STATIONS[0][1]} {LINE_Y} H{STATIONS[-1][1]}'); animation: ride 7s linear infinite; }}
   @keyframes ride {{ from {{ offset-distance: 0%; }} to {{ offset-distance: 100%; }} }}
   @media (prefers-reduced-motion: reduce) {{ .draw, .rise, .pulse {{ animation: none; }} .train {{ display: none; }} }}
 """
@@ -86,15 +88,11 @@ def build(p):
     b.append(t(W-120, 53.5, "200 OK", "mono", 12, p["ink"], weight="700"))
     b.append(t(W-40, 86, "on GitHub since Feb 2023", "mono", 11, p["muted"], anchor="end"))
 
-    # the line: solid segments, then the planned extension
-    solid = [s for s in STATIONS if s[2] != "planned"]
-    for i, (key, (_, x1, _k1), (_, x2, _k2)) in enumerate(zip(SEGMENTS, solid, solid[1:])):
+    # the line, one coloured segment between each pair of stations
+    for i, (key, (_, x1, _k1), (_, x2, _k2)) in enumerate(zip(SEGMENTS, STATIONS, STATIONS[1:])):
         L = x2 - x1
         b.append(f'<path class="seg draw" d="M{x1} {LINE_Y} H{x2}" stroke="{p[key]}" '
                  f'style="stroke-dasharray:{L};--len:{L};animation-delay:{0.3 + i*0.22:.2f}s"/>')
-    px1, px2 = solid[-1][1], STATIONS[-1][1]
-    b.append(f'<path d="M{px1} {LINE_Y} H{px2}" fill="none" stroke="{p["planned"]}" stroke-width="5" '
-             f'stroke-dasharray="2 9" stroke-linecap="round"/>')
 
     # train
     b.append(f'<circle class="train" r="4" fill="{p["bg"]}" stroke="{p["ink"]}" stroke-width="1.5"/>')

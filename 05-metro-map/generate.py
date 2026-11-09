@@ -1,22 +1,29 @@
-"""Generates the metro-map SVG (light + dark) for README-metro.md."""
+"""Generates the metro-map SVG (light + dark) for README-metro.md.
+
+Project lines (banking, work, university, open source) meet at technology interchanges.
+Four topic lines (architecture, distributed, data, security) carry the backend topics
+I've completed; their stations carry a check mark.
+"""
 import sys
 from html import escape
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent / "assets"
 OUT.mkdir(parents=True, exist_ok=True)
-W, H = 880, 640
+W, H = 880, 975
 
 PAL = {
     "light": dict(bg="#FFFFFF", edge="#D0D7DE", ink="#1F2328", muted="#59636E", station="#FFFFFF",
-                  banking="#512BD4", work="#0E8A7E", uni="#E36209", oss="#CF222E", planned="#8C959F"),
+                  banking="#512BD4", work="#0E8A7E", uni="#E36209", oss="#CF222E",
+                  arch="#0969DA", dist="#BF3989", data="#BF8700", sec="#1A7F37"),
     "dark": dict(bg="#161B22", edge="#30363D", ink="#E6EDF3", muted="#8B949E", station="#161B22",
-                 banking="#8B6CFF", work="#2BB3A3", uni="#F0883E", oss="#F85149", planned="#6E7681"),
+                 banking="#8B6CFF", work="#2BB3A3", uni="#F0883E", oss="#F85149",
+                 arch="#58A6FF", dist="#DB61A2", data="#E3B341", sec="#3FB950"),
 }
 SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Consolas, 'Liberation Mono', Menlo, monospace"
 
-# Stations: name -> (x, y)
+# Project and technology stations: name -> (x, y)
 S = {
     "Numerical Methods App": (110, 250),
     "C#": (270, 250),
@@ -25,17 +32,36 @@ S = {
     "EF Core": (690, 330),
     "Medical Insurance System": (610, 410),
     "SQL Server": (450, 410),
-    "Financial Integration Services": (770, 170),
+    "Financial Integration Services": (720, 170),
     "Core Banking APIs": (450, 330),
     "Student Result System": (270, 110),
     "Library Management System": (270, 330),
     "Smart Smile Prediction": (650, 490),
     "hilal": (110, 540),
     "Rust": (290, 540),
-    "Microservices": (450, 110),
-    "Clean Architecture": (650, 110),
 }
 HUBS = {"C#", "ASP.NET Core", "EF Core", "SQL Server"}
+
+# Completed topics: name -> ((x, y), line key)
+MICRO = (847, 290)  # interchange capsule spanning x 840 (arch/dist) and 854 (sec)
+T = {
+    "Clean Architecture": ((450, 110), "arch"),
+    "Domain-Driven Design": ((590, 110), "arch"),
+    "CQRS + MediatR": ((730, 110), "arch"),
+    "RabbitMQ + MassTransit": ((770, 620), "dist"),
+    "Saga pattern": ((650, 620), "dist"),
+    "Outbox / Inbox pattern": ((520, 620), "dist"),
+    "Idempotency & retries": ((360, 620), "dist"),
+    "SQL Server tuning": ((450, 520), "data"),
+    "EF Core performance": ((340, 720), "data"),
+    "Caching with Redis": ((230, 720), "data"),
+    "Concurrency & isolation": ((120, 720), "data"),
+    "Keycloak / OIDC + JWT": ((760, 820), "sec"),
+    "Rate limiting & versioning": ((620, 820), "sec"),
+    "Background jobs": ((480, 820), "sec"),
+    "Observability": ((340, 820), "sec"),
+}
+TP = {name: xy for name, (xy, _) in T.items()}
 
 # Lines: key -> (label, path points)
 LINES = {
@@ -46,9 +72,18 @@ LINES = {
     "uni": ("University", [S["Student Result System"], S["C#"], S["Library Management System"], (350, 410),
                            S["SQL Server"], (530, 490), S["Smart Smile Prediction"]]),
     "oss": ("Open source", [S["hilal"], S["Rust"]]),
+    "arch": ("Architecture", [S["ASP.NET Core"], TP["Clean Architecture"], TP["Domain-Driven Design"],
+                              TP["CQRS + MediatR"], (815, 110), (840, 135), (840, MICRO[1])]),
+    "dist": ("Distributed", [(840, MICRO[1]), (840, 595), (815, 620), TP["RabbitMQ + MassTransit"],
+                             TP["Saga pattern"], TP["Outbox / Inbox pattern"], TP["Idempotency & retries"]]),
+    "data": ("Data & performance", [S["SQL Server"], TP["SQL Server tuning"], (450, 695), (425, 720),
+                                    TP["EF Core performance"], TP["Caching with Redis"],
+                                    TP["Concurrency & isolation"]]),
+    "sec": ("Security & ops", [(854, MICRO[1]), (854, 795), (829, 820), TP["Keycloak / OIDC + JWT"],
+                               TP["Rate limiting & versioning"], TP["Background jobs"], TP["Observability"]]),
 }
-PLANNED = [S["ASP.NET Core"], S["Microservices"], S["Clean Architecture"]]
 
+BELOW = (0, 30, "middle")
 # Label placement: name -> (dx, dy, anchor, lines)
 LABELS = {
     "Numerical Methods App": (0, -22, "middle", ["Numerical Methods App"]),
@@ -65,9 +100,25 @@ LABELS = {
     "Smart Smile Prediction": (16, 5, "start", ["Smart Smile Prediction"]),
     "hilal": (0, -20, "middle", ["hilal"]),
     "Rust": (0, -20, "middle", ["Rust"]),
-    "Microservices": (0, -20, "middle", ["Microservices"]),
-    "Clean Architecture": (0, -20, "middle", ["Clean Architecture"]),
 }
+TOPIC_LABELS = {
+    "Clean Architecture": (0, -22, "middle", ["Clean Architecture"]),
+    "Domain-Driven Design": (0, -22, "middle", ["Domain-Driven Design"]),
+    "CQRS + MediatR": (0, -22, "middle", ["CQRS + MediatR"]),
+    "RabbitMQ + MassTransit": (*BELOW, ["RabbitMQ +", "MassTransit"]),
+    "Saga pattern": (*BELOW, ["Saga pattern"]),
+    "Outbox / Inbox pattern": (*BELOW, ["Outbox / Inbox", "pattern"]),
+    "Idempotency & retries": (*BELOW, ["Idempotency", "& retries"]),
+    "SQL Server tuning": (18, 5, "start", ["SQL Server tuning"]),
+    "EF Core performance": (*BELOW, ["EF Core", "performance"]),
+    "Caching with Redis": (*BELOW, ["Caching", "with Redis"]),
+    "Concurrency & isolation": (*BELOW, ["Concurrency", "& isolation"]),
+    "Keycloak / OIDC + JWT": (*BELOW, ["Keycloak / OIDC", "+ JWT"]),
+    "Rate limiting & versioning": (*BELOW, ["Rate limiting", "& versioning"]),
+    "Background jobs": (*BELOW, ["Background jobs"]),
+    "Observability": (*BELOW, ["Observability"]),
+}
+DONE = len(T) + 1  # + Microservices
 
 
 def t(x, y, s, size=13, fill="#000", anchor="start", weight=None, cls="sans", extra=""):
@@ -82,6 +133,16 @@ def d(points):
 
 def length(points):
     return sum(((x2 - x1) ** 2 + (y2 - y1) ** 2) ** .5 for (x1, y1), (x2, y2) in zip(points, points[1:]))
+
+
+def check(x, y, color, s=1.0, w=2.2):
+    return (f'<path d="M{x-4.2*s:.1f} {y+0.3*s:.1f} l{3*s:.1f} {3*s:.1f} l{5.6*s:.1f} {-6*s:.1f}" fill="none" '
+            f'stroke="{color}" stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+def done_station(p, x, y, color, r=10):
+    return (f'<circle cx="{x}" cy="{y}" r="{r}" fill="{color}" stroke="{p["station"]}" stroke-width="3"/>'
+            + check(x, y, "#FFFFFF", r / 10))
 
 
 def build(p):
@@ -101,57 +162,64 @@ def build(p):
     b.append(t(28, 46, "Mohamed Emad", 24, p["ink"], weight="700"))
     b.append(t(28, 70, "Backend network map · Banking & Fintech", 13, p["muted"]))
 
-    # planned extension
-    b.append(f'<path d="{d(PLANNED)}" fill="none" stroke="{p["planned"]}" stroke-width="5" '
-             f'stroke-dasharray="2 9" stroke-linecap="round"/>')
-
     # lines (drawn in, then a train rides each)
     for i, (key, (_, pts)) in enumerate(LINES.items()):
         L = length(pts)
         b.append(f'<path class="line draw" d="{d(pts)}" stroke="{p[key]}" '
-                 f'style="stroke-dasharray:{L:.0f};--len:{L:.0f};animation-delay:{i*0.25:.2f}s"/>')
+                 f'style="stroke-dasharray:{L:.0f};--len:{L:.0f};animation-delay:{i*0.2:.2f}s"/>')
         if len(pts) > 2:
-            css.append(f".tr-{key} {{ offset-path: path('{d(pts)}'); animation-delay: -{i*2.1:.1f}s; }}")
+            css.append(f".tr-{key} {{ offset-path: path('{d(pts)}'); animation-delay: -{i*1.7:.1f}s; }}")
             b.append(f'<circle class="train tr-{key}" r="4" fill="{p["bg"]}" stroke="{p["ink"]}" stroke-width="1.5"/>')
 
-    # stations
+    # project and technology stations
     for name, (x, y) in S.items():
-        if name in ("Microservices", "Clean Architecture"):
-            b.append(f'<circle cx="{x}" cy="{y}" r="8" fill="{p["station"]}" stroke="{p["planned"]}" '
-                     f'stroke-width="3" stroke-dasharray="3 3"/>')
-        elif name in HUBS:
+        if name in HUBS:
             b.append(f'<circle cx="{x}" cy="{y}" r="12" fill="{p["station"]}" stroke="{p["ink"]}" stroke-width="4"/>')
         else:
             b.append(f'<circle cx="{x}" cy="{y}" r="7.5" fill="{p["station"]}" stroke="{p["ink"]}" stroke-width="3"/>')
 
-    for name, (dx, dy, anchor, lines) in LABELS.items():
-        x, y = S[name]
-        hub = name in HUBS
-        planned = name in ("Microservices", "Clean Architecture")
-        for k, ln in enumerate(lines):
-            b.append(t(x + dx, y + dy + k * 16, ln, 14 if hub else 13,
-                       p["muted"] if planned else p["ink"], anchor, "700" if hub else "600",
-                       extra='font-style="italic"' if planned else ""))
+    # completed topics
+    for name, ((x, y), key) in T.items():
+        b.append(done_station(p, x, y, p[key]))
+    mx, my = MICRO
+    b.append(f'<rect x="{mx-19}" y="{my-12}" width="38" height="24" rx="12" fill="{p["station"]}" '
+             f'stroke="{p["ink"]}" stroke-width="4"/>')
+    b.append(check(mx, my, p["ink"], 0.9, 2.4))
+
+    for labels, pos, hub_set in ((LABELS, S, HUBS), (TOPIC_LABELS, TP, set())):
+        for name, (dx, dy, anchor, lines) in labels.items():
+            x, y = pos[name]
+            hub = name in hub_set
+            for k, ln in enumerate(lines):
+                b.append(t(x + dx, y + dy + k * 16, ln, 14 if hub else 13,
+                           p["ink"], anchor, "700" if hub else "600"))
+    b.append(t(mx - 30, my + 5, "Microservices", 14, p["ink"], "end", "700"))
+
+    # tag for the topic lines
+    tag = f"{DONE} TOPICS COMPLETED"
+    tw = 46 + len(tag) * 8.0
+    b.append(f'<rect x="28" y="598" width="{tw:.0f}" height="28" rx="14" fill="{p["bg"]}" stroke="{p["edge"]}"/>')
+    b.append(done_station(p, 46, 612, p["sec"], 8))
+    b.append(t(62, 616.5, tag, 11, p["ink"], weight="700", cls="mono", extra='letter-spacing="1.4"'))
 
     # legend
-    lx, ly = 470, 560
-    b.append(f'<line x1="{lx-14}" y1="{ly-24}" x2="{W-28}" y2="{ly-24}" stroke="{p["edge"]}"/>')
-    items = [(LINES[k][0], p[k], False) for k in LINES] + [("Planned", p["planned"], True)]
-    col_w = 130
-    for i, (label, color, dashed) in enumerate(items):
-        cx = lx + (i % 3) * col_w
-        cy = ly + (i // 3) * 26
-        if dashed:
-            b.append(f'<line x1="{cx}" y1="{cy}" x2="{cx+26}" y2="{cy}" stroke="{color}" stroke-width="5" stroke-dasharray="2 7" stroke-linecap="round"/>')
-        else:
-            b.append(f'<line x1="{cx}" y1="{cy}" x2="{cx+26}" y2="{cy}" stroke="{color}" stroke-width="7" stroke-linecap="round"/>')
+    lx, ly, col_w = 28, H - 62, 166
+    b.append(f'<line x1="{lx}" y1="{ly-26}" x2="{W-28}" y2="{ly-26}" stroke="{p["edge"]}"/>')
+    items = [(label, p[k]) for k, (label, _) in LINES.items()]
+    for i, (label, color) in enumerate(items):
+        cx, cy = lx + (i % 5) * col_w, ly + (i // 5) * 26
+        b.append(f'<line x1="{cx}" y1="{cy}" x2="{cx+26}" y2="{cy}" stroke="{color}" stroke-width="7" stroke-linecap="round"/>')
         b.append(t(cx + 36, cy + 4.5, label, 12.5, p["ink"]))
     i = len(items)
-    cx, cy = lx + (i % 3) * col_w, ly + (i // 3) * 26
+    cx, cy = lx + (i % 5) * col_w, ly + (i // 5) * 26
     b.append(f'<circle cx="{cx+13}" cy="{cy}" r="7" fill="{p["station"]}" stroke="{p["ink"]}" stroke-width="3.5"/>')
     b.append(t(cx + 36, cy + 4.5, "Interchange", 12.5, p["ink"]))
+    i += 1
+    cx, cy = lx + (i % 5) * col_w, ly + (i // 5) * 26
+    b.append(done_station(p, cx + 13, cy, p["muted"], 8))
+    b.append(t(cx + 36, cy + 4.5, "Completed topic", 12.5, p["ink"]))
 
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H+18}" viewBox="0 0 {W} {H+18}">'
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
             f'<style>{"".join(css)}</style>{"".join(b)}</svg>')
 
 
